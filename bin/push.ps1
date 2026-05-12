@@ -1,5 +1,4 @@
 docker run --rm -it `
-  --publish 4567:4567 `
   --volume "$env:USERPROFILE\.config\trmnlp:/root/.config/trmnlp" `
   --volume "${PWD}:/plugin" `
-  trmnl/trmnlp serve
+  trmnl/trmnlp push
