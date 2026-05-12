@@ -1,0 +1,67 @@
+<style>
+  /* 400px wide — left-aligned */
+  .list-wrap { width: 340px; margin-left: 12px; margin-right: 0; align-self: flex-start; }
+</style>
+
+<div class="screen">
+  <div class="view view--half_vertical">
+
+    <div class="title_bar">
+      {% assign local_ts = trmnl.system.timestamp_utc | plus: trmnl.user.utc_offset %}
+      <p class="title">{{ local_ts | date: "%A, %b %-d" }}</p>
+    </div>
+
+    <div class="flex flex--col">
+      <div class="list-wrap">
+
+        {% assign today     = local_ts | date: "%Y-%m-%d" %}
+        {% assign sorted    = events | sort: "date_time" %}
+        {% assign row_limit = 8 %}
+        {% assign row_count = 0 %}
+        {% assign day_num   = local_ts | date: "%-d" %}
+
+        {% for e in sorted %}
+          {% assign event_local_ts = e.date_time | date: "%s" | plus: trmnl.user.utc_offset %}
+          {% assign event_date     = event_local_ts | date: "%Y-%m-%d" %}
+          {% if event_date == today and row_count < row_limit %}
+            {% assign row_count = row_count | plus: 1 %}
+
+            {% if e.all_day %}
+              <div class="row">
+                <div class="row__lead">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="10" stroke="#000" stroke-width="1.5"/>
+                    <text x="11" y="15.5" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#000">{{ day_num }}</text>
+                  </svg>
+                </div>
+                <div class="row__content">
+                  <p class="row__title">{{ e.summary }}</p>
+                </div>
+                <div class="row__time">
+                  <p class="row__allday-label">all-day</p>
+                </div>
+              </div>
+            {% else %}
+              <div class="row">
+                <div class="row__lead"><div class="row__bar"></div></div>
+                <div class="row__content">
+                  <p class="row__title">{{ e.summary }}</p>
+                </div>
+                <div class="row__time">
+                  <p class="row__time-start">{{ event_local_ts | date: "%-l:%M%P" }}</p>
+                </div>
+              </div>
+            {% endif %}
+
+          {% endif %}
+        {% endfor %}
+
+        {% if row_count == 0 %}
+          <p class="empty">Nothing on the calendar today.</p>
+        {% endif %}
+
+      </div>
+    </div>
+
+  </div>
+</div>

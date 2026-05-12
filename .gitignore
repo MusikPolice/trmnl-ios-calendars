@@ -1,0 +1,3 @@
+resources/*.json
+.claude/
+src/settings.yml

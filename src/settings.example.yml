@@ -1,0 +1,14 @@
+---
+# Copy this file to settings.yml and fill in your plugin ID.
+# settings.yml is gitignored — it contains your plugin ID and will be
+# overwritten by `trmnlp push` with the full server response.
+id: YOUR_PLUGIN_ID
+strategy: webhook
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: ''
+polling_headers: ''
+name: iOS Calendars
+refresh_interval: 1440
