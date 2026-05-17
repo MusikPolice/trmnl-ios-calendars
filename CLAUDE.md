@@ -1,5 +1,21 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Commands
+
+```powershell
+.\bin\serve.ps1   # start local dev server at http://localhost:4567 (auto-reloads on src/ changes)
+.\bin\push.ps1    # push markup to your TRMNL plugin (requires credentials — see below)
+```
+
+First-time auth (stores credentials in `~/.config/trmnlp/config.yml`, outside the repo):
+```powershell
+docker run --rm -it --volume "$env:USERPROFILE\.config\trmnlp:/root/.config/trmnlp" trmnl/trmnlp login
+```
+
+**Fixture date**: `.trmnlp.yml` sets `trmnl.system.timestamp_utc` to anchor "today" in the dev server. When testing on a different date, update that value to the Unix timestamp of noon UTC on the target date (e.g. May 11 2026 12:00 UTC = `1746964800`).
+
 ## Project
 
 TRMNL private plugin that renders iOS Calendar events on an 800×480 2-bit grayscale e-ink display.
